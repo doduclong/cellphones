@@ -8,26 +8,17 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_product")
+@Table(name = "tbl_gallery")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Product {
+public class Gallery {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "description")
-    private String describe;
-
-    @Column(name = "price")
-    private int price;
-
-    @Column(name = "type")
-    private String type;
+    @ManyToOne
+    private Product product;
 }

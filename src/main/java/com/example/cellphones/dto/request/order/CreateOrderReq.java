@@ -1,6 +1,5 @@
 package com.example.cellphones.dto.request.order;
 
-import com.example.cellphones.model.OrderProduct;
 import lombok.*;
 
 import java.util.List;

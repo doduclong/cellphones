@@ -4,11 +4,9 @@ import com.example.cellphones.dto.OrderDto;
 import com.example.cellphones.dto.request.order.CreateOrderReq;
 import com.example.cellphones.dto.request.order.OrderProductReq;
 import com.example.cellphones.mapper.OrderMapper;
-import com.example.cellphones.mapper.ProductMapper;
 import com.example.cellphones.model.Order;
-import com.example.cellphones.model.OrderProduct;
+import com.example.cellphones.model.OrderDetail;
 import com.example.cellphones.model.Product;
-import com.example.cellphones.repository.OrderProductRepository;
 import com.example.cellphones.repository.OrderRepository;
 import com.example.cellphones.repository.ProductRepository;
 import com.example.cellphones.response.ResponseObject;
@@ -40,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
             Date now = new Date();
             int tmpTotal = 0;
             List<OrderProductReq> listOrderProductReq = request.getListOrderProduct();
-            List<OrderProduct> listOrderProduct = new ArrayList<>();
+            List<OrderDetail> listOrderDetail = new ArrayList<>();
 
 
             Order order = Order.builder()
@@ -53,16 +51,16 @@ public class OrderServiceImpl implements OrderService {
 
             for(int orderProductIndex = 0; orderProductIndex< listOrderProductReq.size(); orderProductIndex++){
                 Product product = productRepo.findByName(listOrderProductReq.get(orderProductIndex).getName());
-                OrderProduct orderProduct = OrderProduct.builder()
+                OrderDetail orderDetail = OrderDetail.builder()
                         .product(product)
                         .quantity(listOrderProductReq.get(orderProductIndex).getQuantity())
                         .order(order)
                         .build();
-                listOrderProduct.add(orderProduct);
+                listOrderDetail.add(orderDetail);
                 tmpTotal +=  product.getPrice()* listOrderProductReq.get(orderProductIndex).getQuantity();
             }
             order.setTotal(tmpTotal);
-            order.setListOrderProduct(listOrderProduct);
+            order.setListOrderDetail(listOrderDetail);
             order = this.orderRepo.save(order);
             res.setData(OrderMapper.responseOrderDtoFromModel(order));
         } catch (Exception e) {
