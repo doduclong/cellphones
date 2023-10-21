@@ -28,9 +28,6 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "img")
-    private int img;
-
     @Column(name = "type")
     private String type;
 

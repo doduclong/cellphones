@@ -3,20 +3,16 @@ package com.example.cellphones.service.impl;
 import com.example.cellphones.dto.OrderDto;
 import com.example.cellphones.dto.request.order.CreateOrderReq;
 import com.example.cellphones.dto.request.order.OrderProductReq;
-import com.example.cellphones.dto.request.order.UpdateOrderStatusReq;
-import com.example.cellphones.exception.OrderNotFoundByIdException;
-import com.example.cellphones.exception.UserNotFoundByUsername;
 import com.example.cellphones.mapper.OrderMapper;
-import com.example.cellphones.model.*;
+import com.example.cellphones.model.Order;
+import com.example.cellphones.model.OrderDetail;
+import com.example.cellphones.model.Product;
 import com.example.cellphones.repository.OrderRepository;
 import com.example.cellphones.repository.ProductRepository;
-import com.example.cellphones.repository.UserRepository;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -29,10 +25,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepo;
-    private final UserRepository userRepo;
+    final private OrderRepository orderRepo;
 
-    private final ProductRepository productRepo;
+    final private ProductRepository productRepo;
 
 
     @Override
@@ -43,19 +38,7 @@ public class OrderServiceImpl implements OrderService {
             Date now = new Date();
             int tmpTotal = 0;
             List<OrderProductReq> listOrderProductReq = request.getListOrderProduct();
-            List<OrderProduct> listOrderProduct = new ArrayList<>();
-
-
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-            String username;
-            if (principal instanceof UserDetails) {
-                 username = ((UserDetails)principal).getUsername();
-            } else {
-                 username = principal.toString();
-            }
-
-            User currentUser = userRepo.findByUsername(username).orElseThrow(() -> new UserNotFoundByUsername(username));
+            List<OrderDetail> listOrderDetail = new ArrayList<>();
 
 
             Order order = Order.builder()
@@ -64,22 +47,20 @@ public class OrderServiceImpl implements OrderService {
                     .receiverPhone(request.getReceiverPhone())
                     .receiverAddress(request.getReceiverAddress())
                     .timeOrder(formatter.format(now))
-                    .user(currentUser)
-                    .status(OrderStatus.NEW)
                     .build();
 
             for(int orderProductIndex = 0; orderProductIndex< listOrderProductReq.size(); orderProductIndex++){
                 Product product = productRepo.findByName(listOrderProductReq.get(orderProductIndex).getName());
-                OrderProduct orderProduct = OrderProduct.builder()
+                OrderDetail orderDetail = OrderDetail.builder()
                         .product(product)
                         .quantity(listOrderProductReq.get(orderProductIndex).getQuantity())
                         .order(order)
                         .build();
-                listOrderProduct.add(orderProduct);
+                listOrderDetail.add(orderDetail);
                 tmpTotal +=  product.getPrice()* listOrderProductReq.get(orderProductIndex).getQuantity();
             }
             order.setTotal(tmpTotal);
-            order.setListOrderProduct(listOrderProduct);
+            order.setListOrderDetail(listOrderDetail);
             order = this.orderRepo.save(order);
             res.setData(OrderMapper.responseOrderDtoFromModel(order));
         } catch (Exception e) {
@@ -95,18 +76,4 @@ public class OrderServiceImpl implements OrderService {
         res.setData(listOrder.stream().map(OrderMapper::responseOrderDtoFromModel).collect(Collectors.toList()));
         return res;
     }
-
-    @Override
-    public ResponseObject<OrderDto> updateOrderStatus(UpdateOrderStatusReq request) {
-        ResponseObject<OrderDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
-        Order oldOrder = this.orderRepo.findById(request.getId())
-                .orElseThrow(() -> new OrderNotFoundByIdException(request.getId()));
-
-        oldOrder.setStatus(request.getStatus());
-        oldOrder = this.orderRepo.saveAndFlush(oldOrder);
-        res.setData(OrderMapper.responseOrderDtoFromModel(oldOrder));
-        return res;
-    }
-
-
 }

@@ -23,7 +23,7 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<OrderProduct> listOrderProduct;
+    private List<OrderDetail> listOrderDetail;
 
     @Column(name = "total")
     private long total;

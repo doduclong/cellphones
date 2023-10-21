@@ -44,7 +44,6 @@ public class ProductServiceImpl implements ProductService {
                     .name(request.getName())
                     .describe(request.getDescribe())
                     .price(request.getPrice())
-                    .img(request.getImg())
                     .type(request.getType())
                     .build();
             product = this.productRepo.save(product);
@@ -63,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
 
         oldProduct.setName(request.getName());
         oldProduct.setDescribe(request.getDescribe());
-        oldProduct.setImg(request.getImg());
         oldProduct.setPrice(request.getPrice());
         oldProduct.setType(request.getType());
         oldProduct = this.productRepo.saveAndFlush(oldProduct);
