@@ -2,7 +2,6 @@ package com.example.cellphones.service.impl;
 import com.example.cellphones.dto.UserDto;
 import com.example.cellphones.dto.request.user.CreateUserReq;
 import com.example.cellphones.dto.request.user.UpdateUserReq;
-import com.example.cellphones.exception.ProductNotFoundByIdException;
 import com.example.cellphones.exception.UserNotFoundByUsername;
 import com.example.cellphones.mapper.UserMapper;
 import com.example.cellphones.model.Role;
@@ -12,19 +11,17 @@ import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    final private UserRepository userRepo;
+    private final UserRepository userRepo;
 
-    final private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public ResponseObject<List<UserDto>> getUserList() {

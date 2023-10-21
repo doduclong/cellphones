@@ -3,7 +3,6 @@ package com.example.cellphones.model;
 import javax.persistence.*;
 import lombok.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,15 +31,18 @@ public class Order {
     @Column(name = "payment", columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String payment;
 
-    @Column(name = "receiverName", columnDefinition = "varchar(255) CHARACTER SET utf8")
+    @Column(name = "receiver_name", columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String receiverName;
 
-    @Column(name = "receiverPhone")
+    @Column(name = "receiver_phone")
     private String receiverPhone;
 
-    @Column(name = "receiverAddress", columnDefinition = "varchar(255) CHARACTER SET utf8")
+    @Column(name = "receiver_address", columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String receiverAddress;
 
     @Column(name = "time_order")
     private String timeOrder;
+
+    @Column(name = "status")
+    private OrderStatus status;
 }

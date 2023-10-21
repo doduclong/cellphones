@@ -6,7 +6,7 @@ public class ProductNotFoundByIdException extends RuntimeException{
     }
 
     public ProductNotFoundByIdException(Long id) {
-        super("Food not found by " + id);
+        super("Product not found by " + id);
     }
 
 }

@@ -33,4 +33,10 @@ public class Product {
 
     @Column(name = "type")
     private String type;
+
+    @Column(name = "branch")
+    private String branch;
+
+    @Column(name = "size")
+    private String size;
 }

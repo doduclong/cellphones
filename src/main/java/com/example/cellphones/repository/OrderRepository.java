@@ -1,7 +1,6 @@
 package com.example.cellphones.repository;
 
 import com.example.cellphones.model.Order;
-import com.example.cellphones.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
