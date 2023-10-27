@@ -1,15 +1,18 @@
 package com.example.cellphones.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import lombok.*;
-
-
 @Entity
-@Table(name = "tbl_order_detail")
+@Table(name = "tbl_cart_detail")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderDetail {
+public class CartDetail {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,12 +20,11 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Order order;
+    private Cart cart;
 
     @OneToOne
     private Product product;
 
     @Column(name = "quantity")
     private int quantity;
-
 }
