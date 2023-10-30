@@ -1,9 +1,7 @@
 package com.example.cellphones.service.impl;
 
 import com.example.cellphones.dto.CategoryDto;
-import com.example.cellphones.exception.ProductNotFoundByIdException;
 import com.example.cellphones.mapper.CategoryMapper;
-import com.example.cellphones.mapper.ProductMapper;
 import com.example.cellphones.model.Category;
 import com.example.cellphones.repository.CategoryRepository;
 import com.example.cellphones.response.ResponseObject;

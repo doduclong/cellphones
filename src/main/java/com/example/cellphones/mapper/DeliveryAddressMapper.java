@@ -1,8 +1,5 @@
 package com.example.cellphones.mapper;
-
-import com.example.cellphones.dto.CategoryDto;
 import com.example.cellphones.dto.DeliveryAddressDto;
-import com.example.cellphones.model.Category;
 import com.example.cellphones.model.DeliveryAddress;
 
 public class DeliveryAddressMapper {

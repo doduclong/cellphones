@@ -1,8 +1,5 @@
 package com.example.cellphones.service.impl;
-
-import com.example.cellphones.dto.CategoryDto;
 import com.example.cellphones.dto.DeliveryAddressDto;
-import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.request.deliveryAddress.CreateDeliveryAddressReq;
 import com.example.cellphones.dto.request.deliveryAddress.UpdateDeliveryAddressReq;
 import com.example.cellphones.repository.DeliveryAddressRepository;
