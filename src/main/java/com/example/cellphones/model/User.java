@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,6 +29,7 @@ public class User implements UserDetails {
 
     @Column(name = "password", nullable = false, unique = true)
     private String password;
+
     private boolean enabled;
 
     @Enumerated(EnumType.STRING)
@@ -47,6 +49,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<DeliveryAddress> deliveryAddressList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

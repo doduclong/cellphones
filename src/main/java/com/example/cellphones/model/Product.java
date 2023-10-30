@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_product")
@@ -30,4 +31,11 @@ public class Product {
 
     @Column(name = "type")
     private String type;
+
+    @ManyToOne
+    private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Gallery> galleries;
+
 }
