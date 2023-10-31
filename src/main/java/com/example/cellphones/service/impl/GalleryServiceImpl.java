@@ -1,14 +1,8 @@
 package com.example.cellphones.service.impl;
 
-import com.example.cellphones.dto.CategoryDto;
 import com.example.cellphones.dto.GalleryDto;
-import com.example.cellphones.mapper.CategoryMapper;
-import com.example.cellphones.mapper.GalleryMapper;
-import com.example.cellphones.model.Category;
-import com.example.cellphones.model.Gallery;
 import com.example.cellphones.repository.GalleryRepository;
 import com.example.cellphones.response.ResponseObject;
-import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.GalleryService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;

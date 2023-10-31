@@ -1,16 +1,11 @@
 package com.example.cellphones.service.impl;
 import com.example.cellphones.dto.DeliveryAddressDto;
-import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.request.deliveryAddress.CreateDeliveryAddressReq;
 import com.example.cellphones.dto.request.deliveryAddress.UpdateDeliveryAddressReq;
 import com.example.cellphones.exception.DeliveryAddressNotFoundByIdException;
-import com.example.cellphones.exception.ProductNotFoundByIdException;
 import com.example.cellphones.exception.UserNotFoundByIdException;
-import com.example.cellphones.exception.UserNotFoundByUsername;
 import com.example.cellphones.mapper.DeliveryAddressMapper;
-import com.example.cellphones.mapper.ProductMapper;
 import com.example.cellphones.model.DeliveryAddress;
-import com.example.cellphones.model.Product;
 import com.example.cellphones.model.User;
 import com.example.cellphones.repository.DeliveryAddressRepository;
 import com.example.cellphones.repository.UserRepository;

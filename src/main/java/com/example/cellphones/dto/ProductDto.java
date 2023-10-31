@@ -2,7 +2,6 @@ package com.example.cellphones.dto;
 
 import lombok.*;
 
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
