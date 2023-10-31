@@ -18,9 +18,8 @@ public class Cart{
     private Long id;
 
     @OneToOne
-    @ToString.Exclude
     private User user;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartDetail> cartDetails;
 }

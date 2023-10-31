@@ -20,16 +20,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String describe;
 
     @Column(name = "price")
     private int price;
 
-    @Column(name = "type")
+    @Column(name = "type", columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String type;
 
     @ManyToOne

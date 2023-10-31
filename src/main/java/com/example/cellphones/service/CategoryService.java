@@ -12,5 +12,5 @@ public interface CategoryService {
 
     ResponseObject<List<CategoryDto>> getCategories();
 
-    ResponseObject<CategoryDto> updateCategory(String name);
+    ResponseObject<CategoryDto> updateCategory(Long id, String name);
 }

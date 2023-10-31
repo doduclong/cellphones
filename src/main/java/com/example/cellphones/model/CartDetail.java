@@ -19,7 +19,6 @@ public class CartDetail {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Cart cart;
 
     @OneToOne

@@ -1,6 +1,7 @@
 package com.example.cellphones.service.impl;
 
 import com.example.cellphones.dto.CategoryDto;
+import com.example.cellphones.exception.DeliveryAddressNotFoundByIdException;
 import com.example.cellphones.mapper.CategoryMapper;
 import com.example.cellphones.model.Category;
 import com.example.cellphones.repository.CategoryRepository;
@@ -51,9 +52,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseObject<CategoryDto> updateCategory(String name) {
+    public ResponseObject<CategoryDto> updateCategory(Long id, String name) {
         ResponseObject<CategoryDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
-        Category oldCategory = this.categoryRepo.findByName(name);
+        Category oldCategory = this.categoryRepo.findById(id).orElseThrow(() -> new DeliveryAddressNotFoundByIdException(id));
         oldCategory.setName(name);
         oldCategory = this.categoryRepo.saveAndFlush(oldCategory);
         res.setData(CategoryMapper.responseCategoryDtoFromModel(oldCategory));
