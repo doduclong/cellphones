@@ -1,10 +1,14 @@
 package com.example.cellphones.service.impl;
+import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.UserDto;
 import com.example.cellphones.dto.request.user.CreateUserReq;
 import com.example.cellphones.dto.request.user.UpdateUserReq;
 import com.example.cellphones.exception.ProductNotFoundByIdException;
+import com.example.cellphones.exception.UserNotFoundByIdException;
 import com.example.cellphones.exception.UserNotFoundByUsername;
+import com.example.cellphones.mapper.ProductMapper;
 import com.example.cellphones.mapper.UserMapper;
+import com.example.cellphones.model.Product;
 import com.example.cellphones.model.Role;
 import com.example.cellphones.model.User;
 import com.example.cellphones.repository.UserRepository;
@@ -32,8 +36,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getUsers() {
-        return null;
+    public ResponseObject<UserDto> getUserInfo(Long id) {
+        ResponseObject<UserDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        User user = this.userRepo.findById(id)
+                .orElseThrow(()-> new UserNotFoundByIdException(id));
+        res.setData(UserMapper.responseUserDtoFromModel(user));
+        return res;
     }
 
     @Override
