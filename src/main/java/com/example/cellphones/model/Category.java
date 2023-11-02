@@ -8,34 +8,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_product")
+@Table(name = "tbl_category")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Product {
+public class Category {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String describe;
 
-    @Column(name = "price")
-    private int price;
-
-    @Column(name = "branch")
-    private String branch;
-
-    @Column(name = "size")
-    private String size;
-
-
-
-    @ManyToOne
-    private Category category;
 }

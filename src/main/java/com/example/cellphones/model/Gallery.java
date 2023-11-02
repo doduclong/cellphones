@@ -19,6 +19,9 @@ public class Gallery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
     @ManyToOne
     private Product product;
 }
