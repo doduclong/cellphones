@@ -7,13 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class UserDto {
+public class DeliveryAddressDto {
     private Long id;
-    private String username;
+    private String address;
     private String fullName;
-    private String birthday;
-    private String gender;
-    private String email;
     private String phoneNumber;
-    private String role;
 }

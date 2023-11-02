@@ -7,9 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class OrderProductDto {
+public class OrderDetailDto {
     private Long id;
-    private OrderDto cart;
+    private OrderDto order;
     private ProductDto product;
     private int quantity;
 }

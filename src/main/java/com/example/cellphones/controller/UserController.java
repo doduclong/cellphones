@@ -1,11 +1,16 @@
 package com.example.cellphones.controller;
 
+import com.example.cellphones.dto.ProductDto;
+import com.example.cellphones.dto.UserDto;
 import com.example.cellphones.dto.request.user.CreateUserReq;
 import com.example.cellphones.dto.request.user.SetRoleReq;
+import com.example.cellphones.model.User;
+import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -15,6 +20,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    @GetMapping(path = "/info")
+    public ResponseEntity<?> getUserInfo() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ResponseObject<UserDto> res = userService.getUserInfo(currentUser.getId());
+        return ResponseEntity.ok(res);
+    }
 
     @PostMapping(path = "/create")
     public ResponseEntity<?> createUser(@RequestBody CreateUserReq req) {
