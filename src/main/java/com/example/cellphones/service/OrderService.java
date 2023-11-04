@@ -8,7 +8,7 @@ import com.example.cellphones.response.ResponseObject;
 import java.util.List;
 
 public interface OrderService {
-    ResponseObject<OrderDto> createOrder(CreateOrderReq request);
+    ResponseObject<OrderDto> createOrder(CreateOrderReq request, Long userId);
 
     ResponseObject<List<OrderDto>> searchOrder(String contains);
 
