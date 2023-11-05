@@ -1,6 +1,7 @@
 package com.example.cellphones.response;
 
 public enum ResponseStatus {
+    SUCCESS(200, "200 Success"),
     BAD_REQUEST(400, "400 Bad Request"),
     UNAUTHORIZE(401, "401 Unauthorized"),
     BAD_CREDENTIAL(1003, "Bad Credentials"),

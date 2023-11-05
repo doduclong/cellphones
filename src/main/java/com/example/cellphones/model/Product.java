@@ -29,9 +29,6 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "type", columnDefinition = "varchar(255) CHARACTER SET utf8")
-    private String type;
-
     @ManyToOne
     private Category category;
 

@@ -1,7 +1,5 @@
 package com.example.cellphones.controller;
-import com.example.cellphones.dto.GalleryDto;
 import com.example.cellphones.dto.ProductDto;
-import com.example.cellphones.dto.request.product.CreateProductReq;
 import com.example.cellphones.dto.request.product.SearchProductReq;
 import com.example.cellphones.dto.request.product.UpdateProductReq;
 import com.example.cellphones.response.ResponseObject;
@@ -23,8 +21,6 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    private final GalleryService galleryService;
-
     @DeleteMapping(path = "/delete/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> deleteProduct(@PathVariable String id) {
@@ -37,8 +33,15 @@ public class ProductController {
 
     @PostMapping(path = "/create")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    public ResponseEntity<?> createProduct(@RequestBody CreateProductReq req) {
-        ResponseObject<ProductDto> res = productService.createProduct(req);
+    public ResponseEntity<?> createProduct(
+            //@RequestBody CreateProductReq req
+            @RequestParam("file") List<MultipartFile> files,
+            @RequestParam("name") String name,
+            @RequestParam("describe") String describe,
+            @RequestParam("price") int price,
+            @RequestParam("categoryId") Long categoryId
+    ) {
+        ResponseObject<ProductDto> res = productService.createProduct(name, describe, price, categoryId, files);
         return ResponseEntity.ok(res);
     }
 
@@ -67,9 +70,4 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping(path = "/upload")
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile files) {
-        ResponseObject<List<GalleryDto>> res = galleryService.uploadImage(files);
-        return ResponseEntity.ok(res);
-    }
 }

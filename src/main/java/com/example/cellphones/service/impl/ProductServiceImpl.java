@@ -1,18 +1,24 @@
 package com.example.cellphones.service.impl;
 
 import com.example.cellphones.dto.ProductDto;
-import com.example.cellphones.dto.request.product.CreateProductReq;
 import com.example.cellphones.dto.request.product.UpdateProductReq;
+import com.example.cellphones.exception.CategoryNotFoundByIdException;
 import com.example.cellphones.exception.ProductNotFoundByIdException;
 import com.example.cellphones.mapper.ProductMapper;
+import com.example.cellphones.model.Category;
+import com.example.cellphones.model.Gallery;
 import com.example.cellphones.model.Product;
+import com.example.cellphones.repository.CategoryRepository;
+import com.example.cellphones.repository.GalleryRepository;
 import com.example.cellphones.repository.ProductRepository;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +28,10 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepo;
 
+    private final CategoryRepository categoryRepo;
+
+    private final GalleryRepository galleryRepo;
+
     @Override
     public ResponseObject<List<ProductDto>> getProductList() {
         ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
@@ -30,22 +40,40 @@ public class ProductServiceImpl implements ProductService {
         return res;
     }
 
-    @Override
-    public List<ProductDto> getProducts() {
-        List<Product> foods = this.productRepo.findAll();
-        return foods.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<ProductDto> getProducts() {
+//        List<Product> foods = this.productRepo.findAll();
+//        return foods.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList());
+//    }
 
     @Override
-    public ResponseObject<ProductDto> createProduct(CreateProductReq request) {
+    public ResponseObject<ProductDto> createProduct(String name, String describe, int price, Long categoryId, List<MultipartFile> files) {
         ResponseObject<ProductDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        Category category = this.categoryRepo.findById(categoryId)
+                .orElseThrow(() -> new CategoryNotFoundByIdException(categoryId));
+
+        List<Gallery> galleries = new ArrayList<>();
+
         try {
             Product product = Product.builder()
-                    .name(request.getName())
-                    .describe(request.getDescribe())
-                    .price(request.getPrice())
-                    .type(request.getType())
+                    .name(name)
+                    .describe(describe)
+                    .price(price)
+                    .category(category)
                     .build();
+
+            for (MultipartFile file : files) {
+                Gallery gallery;
+                byte[] image = Base64.encodeBase64(file.getBytes());
+                String result = new String(image);
+                gallery = Gallery.builder()
+                        .image(result)
+                        .product(product)
+                        .build();
+                this.galleryRepo.saveAndFlush(gallery);
+                galleries.add(gallery);
+            }
+            product.setGalleries(galleries);
             product = this.productRepo.save(product);
             res.setData(ProductMapper.responseProductDtoFromModel(product));
         } catch (Exception e) {
@@ -63,7 +91,6 @@ public class ProductServiceImpl implements ProductService {
         oldProduct.setName(request.getName());
         oldProduct.setDescribe(request.getDescribe());
         oldProduct.setPrice(request.getPrice());
-        oldProduct.setType(request.getType());
         oldProduct = this.productRepo.saveAndFlush(oldProduct);
         res.setData(ProductMapper.responseProductDtoFromModel(oldProduct));
         return res;

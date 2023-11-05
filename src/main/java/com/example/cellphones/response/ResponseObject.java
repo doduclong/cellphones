@@ -26,6 +26,11 @@ public class ResponseObject<T> {
         this.message = message;
     }
 
+    public ResponseObject(ResponseStatus status, String message) {
+        this.code = status.getCode();
+        this.message = message;
+    }
+
     public ResponseObject(Boolean result, ResponseStatus status, T data) {
         this.result = result;
         this.code = status.getCode();
