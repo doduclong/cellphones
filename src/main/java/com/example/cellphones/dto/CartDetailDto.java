@@ -1,16 +1,15 @@
 package com.example.cellphones.dto;
 
-import com.example.cellphones.model.CartDetail;
 import lombok.*;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class CartDto {
+public class CartDetailDto {
     private Long id;
-    private List<CartDetail> listCartDetail;
+    private CartDto cart;
+    private ProductDto product;
+    private int quantity;
 }
