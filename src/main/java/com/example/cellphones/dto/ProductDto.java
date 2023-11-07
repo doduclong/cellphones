@@ -15,5 +15,4 @@ public class ProductDto {
     private int price;
     private String type;
     private CategoryDto category;
-//    private List<GalleryDto> galleries;
 }

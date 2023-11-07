@@ -34,7 +34,6 @@ public class ProductController {
     @PostMapping(path = "/create")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> createProduct(
-            //@RequestBody CreateProductReq req
             @RequestParam("file") List<MultipartFile> files,
             @RequestParam("name") String name,
             @RequestParam("describe") String describe,

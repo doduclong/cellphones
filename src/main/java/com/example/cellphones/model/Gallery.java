@@ -22,6 +22,7 @@ public class Gallery {
     @ManyToOne
     private Product product;
 
-    @Column(name = "image")
+    @Lob
+    @Column(name = "image", columnDefinition = "TEXT")
     private String image;
 }

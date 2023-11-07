@@ -12,7 +12,7 @@ public class ProductMapper {
                 .name(product.getName())
                 .describe(product.getDescribe())
                 .price(product.getPrice())
-                .type(product.getType())
+                .category(CategoryMapper.responseCategoryDtoFromModel(product.getCategory()))
                 .build();
     }
 }
