@@ -2,6 +2,8 @@ package com.example.cellphones.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +15,6 @@ public class ProductDto {
     private String name;
     private String describe;
     private int price;
-    private String type;
+    private List<GalleryDto> galleries;
     private CategoryDto category;
 }

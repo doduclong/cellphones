@@ -9,16 +9,17 @@ import com.example.cellphones.model.Category;
 import com.example.cellphones.model.Gallery;
 import com.example.cellphones.model.Product;
 import com.example.cellphones.repository.CategoryRepository;
-import com.example.cellphones.repository.GalleryRepository;
 import com.example.cellphones.repository.ProductRepository;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final CategoryRepository categoryRepo;
 
-    private final GalleryRepository galleryRepo;
 
     @Override
     public ResponseObject<List<ProductDto>> getProductList() {
@@ -63,12 +63,24 @@ public class ProductServiceImpl implements ProductService {
                     .build();
 
             for (MultipartFile file : files) {
-                byte[] image = Base64.encodeBase64(file.getBytes());
-                String result = new String(image);
+                InputStream inputStream = file.getInputStream();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                byte[] data = outputStream.toByteArray();
+                String result = Base64.getEncoder().encodeToString(data);
+
+                inputStream.close();
+                outputStream.close();
+
                 if (product.getGalleries() == null) {
                     product.setGalleries(new ArrayList<>());
                 }
-                product.getGalleries().add(Gallery.builder()
+                galleries.add(Gallery.builder()
                         .image(result)
                         .product(product)
                         .build());

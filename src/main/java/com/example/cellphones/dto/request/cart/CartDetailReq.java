@@ -1,4 +1,4 @@
-package com.example.cellphones.dto.request.order;
+package com.example.cellphones.dto.request.cart;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class OrderProductReq {
+public class CartDetailReq {
     private String name;
     private int quantity;
 }

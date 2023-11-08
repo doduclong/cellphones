@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @Builder
 public class CreateOrderReq {
-    private List<OrderProductReq> listOrderProduct;
+    private List<OrderDetailReq> listOrderProduct;
     //private int total;
     private String payment;
     private String receiverName;

@@ -3,6 +3,7 @@ package com.example.cellphones.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,5 +22,5 @@ public class Cart{
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartDetail> cartDetails;
+    private List<CartDetail> cartDetails = new ArrayList<>();
 }

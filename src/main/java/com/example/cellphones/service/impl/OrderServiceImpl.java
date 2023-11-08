@@ -2,7 +2,7 @@ package com.example.cellphones.service.impl;
 
 import com.example.cellphones.dto.OrderDto;
 import com.example.cellphones.dto.request.order.CreateOrderReq;
-import com.example.cellphones.dto.request.order.OrderProductReq;
+import com.example.cellphones.dto.request.order.OrderDetailReq;
 import com.example.cellphones.dto.request.order.UpdateOrderStatusReq;
 import com.example.cellphones.exception.UserNotFoundByIdException;
 import com.example.cellphones.mapper.OrderMapper;
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
             Date now = new Date();
             int tmpTotal = 0;
             User user = userRepo.findById(userId).orElseThrow(() -> new UserNotFoundByIdException(userId));
-            List<OrderProductReq> listOrderProductReq = request.getListOrderProduct();
+            List<OrderDetailReq> listOrderDetailReq = request.getListOrderProduct();
             List<OrderDetail> listOrderDetail = new ArrayList<>();
 
 
@@ -57,15 +57,15 @@ public class OrderServiceImpl implements OrderService {
                     .timeOrder(formatter.format(now))
                     .build();
 
-            for (OrderProductReq orderProductReq : listOrderProductReq) {
-                Product product = productRepo.findByName(orderProductReq.getName());
+            for (OrderDetailReq orderDetailReq : listOrderDetailReq) {
+                Product product = productRepo.findByName(orderDetailReq.getName());
                 OrderDetail orderDetail = OrderDetail.builder()
                         .product(product)
-                        .quantity(orderProductReq.getQuantity())
+                        .quantity(orderDetailReq.getQuantity())
                         .order(order)
                         .build();
                 listOrderDetail.add(orderDetail);
-                tmpTotal += product.getPrice() * orderProductReq.getQuantity();
+                tmpTotal += product.getPrice() * orderDetailReq.getQuantity();
             }
             order.setTotal(tmpTotal);
             order.setListOrderDetail(listOrderDetail);
