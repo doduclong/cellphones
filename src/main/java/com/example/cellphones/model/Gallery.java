@@ -23,6 +23,6 @@ public class Gallery {
     private Product product;
 
     @Lob
-    @Column(name = "image", columnDefinition = "TEXT")
+    @Column(name = "image")
     private String image;
 }

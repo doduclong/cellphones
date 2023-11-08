@@ -63,15 +63,15 @@ public class ProductServiceImpl implements ProductService {
                     .build();
 
             for (MultipartFile file : files) {
-                Gallery gallery;
                 byte[] image = Base64.encodeBase64(file.getBytes());
                 String result = new String(image);
-                gallery = Gallery.builder()
+                if (product.getGalleries() == null) {
+                    product.setGalleries(new ArrayList<>());
+                }
+                product.getGalleries().add(Gallery.builder()
                         .image(result)
                         .product(product)
-                        .build();
-                this.galleryRepo.saveAndFlush(gallery);
-                galleries.add(gallery);
+                        .build());
             }
             product.setGalleries(galleries);
             product = this.productRepo.save(product);
