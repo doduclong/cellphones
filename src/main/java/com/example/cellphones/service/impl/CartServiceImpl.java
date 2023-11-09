@@ -1,7 +1,6 @@
 package com.example.cellphones.service.impl;
 
 import com.example.cellphones.dto.CartDto;
-import com.example.cellphones.dto.request.cart.CartDetailReq;
 import com.example.cellphones.dto.request.cart.UpdateCartDetailReq;
 import com.example.cellphones.mapper.CartMapper;
 import com.example.cellphones.model.*;
@@ -21,6 +20,7 @@ public class CartServiceImpl implements CartService {
 
     private final ProductRepository productRepo;
 
+
     @Override
     public ResponseObject<CartDto> getCart(Long userId) {
         ResponseObject<CartDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
@@ -34,18 +34,28 @@ public class CartServiceImpl implements CartService {
         ResponseObject<CartDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         try {
             Cart cart = cartRepo.findCartByUserId(userId);
-            List<CartDetailReq> listCartDetailReq = req.getListCartDetail();
             List<CartDetail> listCartDetail = cart.getCartDetails();
 
-            for (CartDetailReq cartDetailReq : listCartDetailReq) {
-                Product product = productRepo.findByName(cartDetailReq.getName());
-                CartDetail cartDetail = CartDetail.builder()
-                        .product(product)
-                        .quantity(cartDetailReq.getQuantity())
-                        .cart(cart)
-                        .build();
-                listCartDetail.add(cartDetail);
-                //tmpTotal += product.getPrice() * cartDetailReq.getQuantity();
+            boolean productExists = listCartDetail.stream()
+                    .anyMatch(cartDetail -> cartDetail.getProduct().getName().equals(req.getCartDetail().getName()));
+
+            if (productExists) {
+                // Product already exists, update it
+                listCartDetail.forEach(cartDetail -> {
+                    if (cartDetail.getProduct().getName().equals(req.getCartDetail().getName())) {
+                        // Update properties of existing product in CartDetail
+                        cartDetail.setQuantity(cartDetail.getQuantity()+req.getCartDetail().getQuantity());
+                        // Add any other properties you want to update
+                    }
+                });
+            } else {
+                Product product = this.productRepo.findByName(req.getCartDetail().getName());
+                // Product doesn't exist, add it to the listCartDetail
+                listCartDetail.add(CartDetail.builder()
+                                        .cart(cart)
+                                        .product(product)
+                                        .quantity(req.getCartDetail().getQuantity())
+                                        .build());
             }
             //cart.setTotal(tmpTotal);
             cart.setCartDetails(listCartDetail);
