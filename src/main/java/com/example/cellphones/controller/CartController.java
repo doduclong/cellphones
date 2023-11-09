@@ -23,7 +23,7 @@ public class CartController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping(path = "/add-product")
+    @PostMapping(path = "/add-product")
     public ResponseEntity<?> updateCartDetail(@RequestBody UpdateCartDetailReq req) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ResponseObject<CartDto> res = cartService.addProductToCart(req, currentUser.getId());

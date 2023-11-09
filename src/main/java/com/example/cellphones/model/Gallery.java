@@ -1,5 +1,6 @@
 package com.example.cellphones.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Gallery {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Product product;
 
     @Lob

@@ -8,6 +8,7 @@ import com.example.cellphones.mapper.UserMapper;
 import com.example.cellphones.model.Cart;
 import com.example.cellphones.model.Role;
 import com.example.cellphones.model.User;
+import com.example.cellphones.repository.CartRepository;
 import com.example.cellphones.repository.UserRepository;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
@@ -49,10 +50,9 @@ public class UserServiceImpl implements UserService {
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role(Role.USER)
                     .build();
-            Cart cart = Cart.builder()
+            user.setCart(Cart.builder()
                     .user(user)
-                    .build();
-            user.setCart(cart);
+                    .build());
             user = this.userRepo.save(user);
             res.setData(UserMapper.responseUserDtoFromModel(user));
             return true;

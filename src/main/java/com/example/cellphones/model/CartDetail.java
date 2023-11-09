@@ -1,5 +1,6 @@
 package com.example.cellphones.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class CartDetail {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Cart cart;
 
     @OneToOne
