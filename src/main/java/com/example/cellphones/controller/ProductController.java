@@ -63,9 +63,9 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping(path = "/search")
-    public ResponseEntity<?> searchProduct(@RequestBody SearchProductReq req) {
-        ResponseObject<List<ProductDto>> res = productService.searchProduct(req.getContains());
+    @GetMapping(path = "/search")
+    public ResponseEntity<?> searchProduct(@RequestParam String searchText) {
+        ResponseObject<List<ProductDto>> res = productService.searchProduct(searchText);
         return ResponseEntity.ok(res);
     }
 
