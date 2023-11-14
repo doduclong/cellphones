@@ -9,7 +9,6 @@ import lombok.*;
 @Builder
 public class CartDetailDto {
     private Long id;
-    private CartDto cart;
-    private ProductDto product;
+    private String productName;
     private int quantity;
 }
