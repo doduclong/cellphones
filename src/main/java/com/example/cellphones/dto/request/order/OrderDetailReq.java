@@ -10,4 +10,5 @@ import lombok.*;
 public class OrderDetailReq {
     private String name;
     private int quantity;
+    private String size;
 }

@@ -1,5 +1,6 @@
 package com.example.cellphones.dto;
 
+import com.example.cellphones.model.OrderStatus;
 import lombok.*;
 
 import java.util.List;
@@ -10,11 +11,13 @@ import java.util.List;
 @Builder
 public class OrderDto {
     private Long id;
-    //private List<String> listCartProduct;
+    private List<OrderDetailDto> listOrderDetail;
     private long total;
+    private String note;
     private String payment;
     private String receiverName;
     private String receiverPhone;
     private String receiverAddress;
     private String timeOrder;
+    private OrderStatus status;
 }

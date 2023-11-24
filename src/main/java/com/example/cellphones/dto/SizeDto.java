@@ -7,9 +7,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class CartDetailDto {
+public class SizeDto {
     private Long id;
-    private String productName;
-    private int quantity;
     private String size;
+    private int quantity;
 }

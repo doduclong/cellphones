@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 public class CreateOrderReq {
     private List<OrderDetailReq> listOrderProduct;
-    //private int total;
+    private String note;
     private String payment;
     private String receiverName;
     private String receiverPhone;

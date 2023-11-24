@@ -12,14 +12,15 @@ public class OrderMapper {
     public static OrderDto responseOrderDtoFromModel(Order order){
         return OrderDto.builder()
                 .id(order.getId())
-//                .listCartProduct(order.getListOrderProduct()==null?
-//                        null: order.getListOrderProduct().stream().map(c-> c.getProduct().getName()).collect(Collectors.toList()))
+                .listOrderDetail(order.getListOrderDetail().stream().map(OrderDetailMapper::responseOrderDetailDtoFromModel).collect(Collectors.toList()))
                 .total(order.getTotal())
+                .note(order.getNote())
                 .payment(order.getPayment())
                 .receiverName(order.getReceiverName())
                 .receiverPhone(order.getReceiverPhone())
                 .receiverAddress(order.getReceiverAddress())
                 .timeOrder(order.getTimeOrder())
+                .status(order.getStatus())
                 .build();
     }
 }

@@ -3,6 +3,7 @@ package com.example.cellphones.model;
 import javax.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,7 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<OrderDetail> listOrderDetail;
+    private List<OrderDetail> listOrderDetail = new ArrayList<>();
 
     @Column(name = "total")
     private long total;
@@ -39,6 +40,9 @@ public class Order {
 
     @Column(name = "receiver_address", columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String receiverAddress;
+
+    @Column(name = "note", columnDefinition = "varchar(255) CHARACTER SET utf8")
+    private String note;
 
     @Column(name = "time_order")
     private String timeOrder;

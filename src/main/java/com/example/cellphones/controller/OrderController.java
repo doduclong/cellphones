@@ -1,6 +1,7 @@
 package com.example.cellphones.controller;
 
 import com.example.cellphones.dto.OrderDto;
+import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.request.order.CreateOrderReq;
 import com.example.cellphones.dto.request.product.SearchProductReq;
 import com.example.cellphones.model.User;
@@ -19,7 +20,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-
+    @GetMapping(path = "/getAll")
+    public ResponseEntity<?> getProductList() {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ResponseObject<List<OrderDto>> res = orderService.getOrderOfUser(currentUser.getId());
+        return ResponseEntity.ok(res);
+    }
     @PostMapping(path = "/create")
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderReq req) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

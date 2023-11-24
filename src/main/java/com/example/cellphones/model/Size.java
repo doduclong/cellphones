@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 @Entity
-@Table(name = "tbl_cart_detail")
+@Table(name = "tbl_size")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CartDetail {
+public class Size {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +22,12 @@ public class CartDetail {
 
     @ManyToOne
     @JsonIgnore
-    private Cart cart;
-
-    @OneToOne
     private Product product;
+
+    @Lob
+    @Column(name = "size")
+    private String size;
 
     @Column(name = "quantity")
     private int quantity;
-
-    @Column(name = "size")
-    private String size;
 }

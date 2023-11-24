@@ -1,5 +1,6 @@
 package com.example.cellphones.controller;
 import com.example.cellphones.dto.ProductDto;
+import com.example.cellphones.dto.request.product.CreateProductReq;
 import com.example.cellphones.dto.request.product.SearchProductReq;
 import com.example.cellphones.dto.request.product.UpdateProductReq;
 import com.example.cellphones.response.ResponseObject;
@@ -38,9 +39,11 @@ public class ProductController {
             @RequestParam("name") String name,
             @RequestParam("describe") String describe,
             @RequestParam("price") int price,
-            @RequestParam("categoryId") Long categoryId
+            @RequestParam("categoryId") Long categoryId,
+            @RequestParam("classification") String classification,
+            @RequestParam("sizes") String reqs
     ) {
-        ResponseObject<ProductDto> res = productService.createProduct(name, describe, price, categoryId, files);
+        ResponseObject<ProductDto> res = productService.createProduct(name, describe, price, categoryId, files,classification, reqs);
         return ResponseEntity.ok(res);
     }
 

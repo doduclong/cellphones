@@ -14,4 +14,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             " WHERE(:contains is null or (o.receiverName like %:contains%) " +
             "or (o.receiverPhone like %:contains%) or (o.receiverAddress like %:contains%))")
     List<Order> searchOrder(@Param("contains") String contains);
+
+    @Query("SELECT o FROM Order o" +
+            " WHERE o.user.id = :userId")
+    List<Order> findByUserId(@Param("userId") Long userId);
 }

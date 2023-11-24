@@ -1,6 +1,7 @@
 package com.example.cellphones.service.impl;
 
 import com.example.cellphones.dto.ProductDto;
+import com.example.cellphones.dto.request.product.CreateProductReq;
 import com.example.cellphones.dto.request.product.UpdateProductReq;
 import com.example.cellphones.exception.CategoryNotFoundByIdException;
 import com.example.cellphones.exception.ProductNotFoundByIdException;
@@ -8,11 +9,15 @@ import com.example.cellphones.mapper.ProductMapper;
 import com.example.cellphones.model.Category;
 import com.example.cellphones.model.Gallery;
 import com.example.cellphones.model.Product;
+import com.example.cellphones.model.Size;
 import com.example.cellphones.repository.CategoryRepository;
 import com.example.cellphones.repository.ProductRepository;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.ProductService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,12 +52,14 @@ public class ProductServiceImpl implements ProductService {
 //    }
 
     @Override
-    public ResponseObject<ProductDto> createProduct(String name, String describe, int price, Long categoryId, List<MultipartFile> files) {
+    public ResponseObject<ProductDto> createProduct(String name, String describe, int price, Long categoryId, List<MultipartFile> files,String classification, String reqs) {
         ResponseObject<ProductDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         Category category = this.categoryRepo.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundByIdException(categoryId));
 
         List<Gallery> galleries = new ArrayList<>();
+
+        List<Size> sizes = new ArrayList<>();
 
         try {
             Product product = Product.builder()
@@ -60,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
                     .describe(describe)
                     .price(price)
                     .category(category)
+                    .classification(classification)
                     .build();
 
             for (MultipartFile file : files) {
@@ -85,7 +93,25 @@ public class ProductServiceImpl implements ProductService {
                         .product(product)
                         .build());
             }
+
+//            Gson gson = new Gson();
+//            CreateProductReq[] sizeQuantities = gson.fromJson(reqs, CreateProductReq[].class);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<CreateProductReq> sizeQuantities = objectMapper.readValue(reqs, new TypeReference<List<CreateProductReq>>(){});
+
+            for (CreateProductReq req : sizeQuantities) {
+                if (product.getSizes() == null) {
+                    product.setSizes(new ArrayList<>());
+                }
+                sizes.add(Size.builder()
+                        .size(req.getSize())
+                        .quantity(req.getQuantity())
+                        .product(product)
+                        .build());
+            }
             product.setGalleries(galleries);
+            product.setSizes(sizes);
             product = this.productRepo.save(product);
             res.setData(ProductMapper.responseProductDtoFromModel(product));
         } catch (Exception e) {

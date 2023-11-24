@@ -15,6 +15,7 @@ public class ProductMapper {
                 .describe(product.getDescribe())
                 .price(product.getPrice())
                 .galleries(product.getGalleries().stream().map(GalleryMapper::responseGalleryDtoFromModel).collect(Collectors.toList()))
+                .sizes(product.getSizes().stream().map(SizeMapper::responseSizeDtoFromModel).collect(Collectors.toList()))
                 .category(CategoryMapper.responseCategoryDtoFromModel(product.getCategory()))
                 .build();
     }

@@ -9,4 +9,5 @@ import lombok.*;
 public class UpdateCartDetailReq {
     private String name;
     private int quantity;
+    private String size;
 }

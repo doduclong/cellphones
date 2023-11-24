@@ -6,10 +6,7 @@ import com.example.cellphones.dto.request.order.OrderDetailReq;
 import com.example.cellphones.dto.request.order.UpdateOrderStatusReq;
 import com.example.cellphones.exception.UserNotFoundByIdException;
 import com.example.cellphones.mapper.OrderMapper;
-import com.example.cellphones.model.Order;
-import com.example.cellphones.model.OrderDetail;
-import com.example.cellphones.model.Product;
-import com.example.cellphones.model.User;
+import com.example.cellphones.model.*;
 import com.example.cellphones.repository.OrderRepository;
 import com.example.cellphones.repository.ProductRepository;
 import com.example.cellphones.repository.UserRepository;
@@ -37,6 +34,14 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
+    public ResponseObject<List<OrderDto>> getOrderOfUser(Long userId) {
+        ResponseObject<List<OrderDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<Order> listOrder = this.orderRepo.findByUserId(userId);
+        res.setData(listOrder.stream().map(OrderMapper::responseOrderDtoFromModel).collect(Collectors.toList()));
+        return res;
+    }
+
+    @Override
     public ResponseObject<OrderDto> createOrder(CreateOrderReq request, Long userId) {
         ResponseObject<OrderDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         try {
@@ -47,14 +52,15 @@ public class OrderServiceImpl implements OrderService {
             List<OrderDetailReq> listOrderDetailReq = request.getListOrderProduct();
             List<OrderDetail> listOrderDetail = new ArrayList<>();
 
-
             Order order = Order.builder()
                     .user(user)
+                    .note(request.getNote())
                     .payment(request.getPayment())
                     .receiverName(request.getReceiverName())
                     .receiverPhone(request.getReceiverPhone())
                     .receiverAddress(request.getReceiverAddress())
                     .timeOrder(formatter.format(now))
+                    .status(OrderStatus.NEW)
                     .build();
 
             for (OrderDetailReq orderDetailReq : listOrderDetailReq) {
@@ -63,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
                         .product(product)
                         .quantity(orderDetailReq.getQuantity())
                         .order(order)
+                        .size(orderDetailReq.getSize())
                         .build();
                 listOrderDetail.add(orderDetail);
                 tmpTotal += product.getPrice() * orderDetailReq.getQuantity();

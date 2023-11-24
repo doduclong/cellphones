@@ -22,7 +22,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, columnDefinition = "varchar(255) CHARACTER SET utf8")
+    @Column(name = "name",unique = true, nullable = false, columnDefinition = "varchar(255) CHARACTER SET utf8")
     private String name;
 
     @Column(name = "description", columnDefinition = "varchar(255) CHARACTER SET utf8")
@@ -30,6 +30,12 @@ public class Product {
 
     @Column(name = "price")
     private int price;
+
+    @Column(name = "classification")
+    private String classification;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Size> sizes = new ArrayList<>();
 
     @ManyToOne
     @JsonIgnore

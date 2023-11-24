@@ -62,6 +62,7 @@ public class CartServiceImpl implements CartService {
                                         .cart(cart)
                                         .product(product)
                                         .quantity(req.getQuantity())
+                                        .size(req.getSize())
                                         .build());
             }
             //cart.setTotal(tmpTotal);

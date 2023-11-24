@@ -3,6 +3,7 @@ package com.example.cellphones.service;
 
 
 import com.example.cellphones.dto.ProductDto;
+import com.example.cellphones.dto.request.product.CreateProductReq;
 import com.example.cellphones.dto.request.product.UpdateProductReq;
 import com.example.cellphones.response.ResponseObject;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface ProductService {
     ResponseObject<List<ProductDto>> getProductList();
-    ResponseObject<ProductDto> createProduct(String name, String describe, int price, Long categoryId, List<MultipartFile> files);
+    ResponseObject<ProductDto> createProduct(String name, String describe, int price, Long categoryId, List<MultipartFile> files,String classification, String reqs);
     ResponseObject<ProductDto> updateProduct(UpdateProductReq request);
     boolean deleteProduct(Long id);
 

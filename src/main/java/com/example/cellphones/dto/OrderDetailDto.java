@@ -2,6 +2,8 @@ package com.example.cellphones.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -9,7 +11,8 @@ import lombok.*;
 @Builder
 public class OrderDetailDto {
     private Long id;
-    private OrderDto order;
-    private ProductDto product;
+    private String productName;
+    private List<GalleryDto> galleries;
     private int quantity;
+    private String size;
 }

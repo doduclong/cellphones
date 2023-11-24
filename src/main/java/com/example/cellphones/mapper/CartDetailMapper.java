@@ -1,8 +1,6 @@
 package com.example.cellphones.mapper;
 
 import com.example.cellphones.dto.CartDetailDto;
-import com.example.cellphones.dto.CartDto;
-import com.example.cellphones.model.Cart;
 import com.example.cellphones.model.CartDetail;
 
 public class CartDetailMapper {
@@ -11,6 +9,7 @@ public class CartDetailMapper {
                 .id(cartDetail.getId())
                 .productName(cartDetail.getProduct().getName())
                 .quantity(cartDetail.getQuantity())
+                .size(cartDetail.getSize())
                 .build();
     }
 }

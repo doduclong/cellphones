@@ -16,5 +16,6 @@ public class ProductDto {
     private String describe;
     private int price;
     private List<GalleryDto> galleries;
+    private List<SizeDto> sizes;
     private CategoryDto category;
 }
