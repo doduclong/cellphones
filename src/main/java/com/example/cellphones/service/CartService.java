@@ -11,5 +11,7 @@ public interface CartService {
 
     ResponseObject<CartDto> addProductToCart(UpdateCartDetailReq req, Long userId);
 
+    ResponseObject<CartDto> removeProductFromCart(Long cartDetailId, Long userId);
+
     ResponseObject<CartDetailDto> updateQuantityCartDetail(UpdateQuantityCartDetailReq req);
 }

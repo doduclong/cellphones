@@ -45,19 +45,14 @@ public class CartServiceImpl implements CartService {
 
             boolean productExists = listCartDetail.stream()
                     .anyMatch(cartDetail -> cartDetail.getProduct().getName().equals(req.getName()));
-
             if (productExists) {
-                // Product already exists, update it
                 listCartDetail.forEach(cartDetail -> {
                     if (cartDetail.getProduct().getName().equals(req.getName())) {
-                        // Update properties of existing product in CartDetail
                         cartDetail.setQuantity(cartDetail.getQuantity()+req.getQuantity());
-                        // Add any other properties you want to update
                     }
                 });
             } else {
                 Product product = this.productRepo.findByName(req.getName());
-                // Product doesn't exist, add it to the listCartDetail
                 listCartDetail.add(CartDetail.builder()
                                         .cart(cart)
                                         .product(product)
@@ -66,6 +61,23 @@ public class CartServiceImpl implements CartService {
                                         .build());
             }
             //cart.setTotal(tmpTotal);
+            cart.setCartDetails(listCartDetail);
+            cart = this.cartRepo.save(cart);
+            res.setData(CartMapper.responseCartDtoFromModel(cart));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return res;
+    }
+
+    @Override
+    public ResponseObject<CartDto> removeProductFromCart(Long cartDetailId, Long userId) {
+        ResponseObject<CartDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        try {
+            Cart cart = cartRepo.findCartByUserId(userId);
+            List<CartDetail> listCartDetail = cart.getCartDetails();
+            CartDetail cartDetail = cartDetailRepo.findById(cartDetailId).orElseThrow();
+            listCartDetail.remove(cartDetail);
             cart.setCartDetails(listCartDetail);
             cart = this.cartRepo.save(cart);
             res.setData(CartMapper.responseCartDtoFromModel(cart));

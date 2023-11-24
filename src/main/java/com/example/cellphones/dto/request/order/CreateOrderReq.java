@@ -16,4 +16,5 @@ public class CreateOrderReq {
     private String receiverName;
     private String receiverPhone;
     private String receiverAddress;
+    private  List<Long> listSelectedCartDetailId;
 }

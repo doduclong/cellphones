@@ -16,6 +16,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> searchOrder(@Param("contains") String contains);
 
     @Query("SELECT o FROM Order o" +
-            " WHERE o.user.id = :userId")
+            " WHERE o.user.id = :userId order by o.timeOrder desc")
     List<Order> findByUserId(@Param("userId") Long userId);
 }

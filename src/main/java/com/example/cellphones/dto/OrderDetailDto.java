@@ -12,6 +12,7 @@ import java.util.List;
 public class OrderDetailDto {
     private Long id;
     private String productName;
+    private int price;
     private List<GalleryDto> galleries;
     private int quantity;
     private String size;

@@ -7,9 +7,7 @@ import com.example.cellphones.dto.request.order.UpdateOrderStatusReq;
 import com.example.cellphones.exception.UserNotFoundByIdException;
 import com.example.cellphones.mapper.OrderMapper;
 import com.example.cellphones.model.*;
-import com.example.cellphones.repository.OrderRepository;
-import com.example.cellphones.repository.ProductRepository;
-import com.example.cellphones.repository.UserRepository;
+import com.example.cellphones.repository.*;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.OrderService;
@@ -31,6 +29,10 @@ public class OrderServiceImpl implements OrderService {
     final private ProductRepository productRepo;
 
     final private UserRepository userRepo;
+
+    private final CartRepository cartRepo;
+
+    private final CartDetailRepository cartDetailRepo;
 
 
     @Override
@@ -77,6 +79,17 @@ public class OrderServiceImpl implements OrderService {
             order.setTotal(tmpTotal);
             order.setListOrderDetail(listOrderDetail);
             order = this.orderRepo.save(order);
+
+            Cart cart = cartRepo.findCartByUserId(userId);
+            List<CartDetail> listCartDetail = cart.getCartDetails();
+            for(int i=0; i<request.getListSelectedCartDetailId().size(); i++){
+                CartDetail cartDetail = cartDetailRepo.findById(request.getListSelectedCartDetailId().get(i)).orElseThrow();
+                listCartDetail.remove(cartDetail);
+            }
+
+            cart.setCartDetails(listCartDetail);
+            this.cartRepo.save(cart);
+
             res.setData(OrderMapper.responseOrderDtoFromModel(order));
         } catch (Exception e) {
             throw new RuntimeException(e);

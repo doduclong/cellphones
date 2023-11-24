@@ -9,6 +9,7 @@ public class OrderDetailMapper {
         return OrderDetailDto.builder()
                 .id(orderDetail.getId())
                 .productName(orderDetail.getProduct().getName())
+                .price(orderDetail.getProduct().getPrice())
                 .galleries(orderDetail.getProduct().getGalleries().stream().map(GalleryMapper::responseGalleryDtoFromModel).collect(Collectors.toList()))
                 .quantity(orderDetail.getQuantity())
                 .size(orderDetail.getSize())
