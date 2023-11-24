@@ -1,8 +1,5 @@
 package com.example.cellphones.mapper;
-
-import com.example.cellphones.dto.CartDetailDto;
 import com.example.cellphones.dto.OrderDetailDto;
-import com.example.cellphones.model.CartDetail;
 import com.example.cellphones.model.OrderDetail;
 
 import java.util.stream.Collectors;

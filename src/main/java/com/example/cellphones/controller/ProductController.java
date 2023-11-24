@@ -1,11 +1,8 @@
 package com.example.cellphones.controller;
 import com.example.cellphones.dto.ProductDto;
-import com.example.cellphones.dto.request.product.CreateProductReq;
-import com.example.cellphones.dto.request.product.SearchProductReq;
 import com.example.cellphones.dto.request.product.UpdateProductReq;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
-import com.example.cellphones.service.GalleryService;
 import com.example.cellphones.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

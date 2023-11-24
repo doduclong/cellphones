@@ -1,7 +1,6 @@
 package com.example.cellphones.controller;
 
 import com.example.cellphones.dto.OrderDto;
-import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.request.order.CreateOrderReq;
 import com.example.cellphones.dto.request.product.SearchProductReq;
 import com.example.cellphones.model.User;

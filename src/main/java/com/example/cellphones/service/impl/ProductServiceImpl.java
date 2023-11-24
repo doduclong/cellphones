@@ -17,7 +17,6 @@ import com.example.cellphones.response.ResponseStatus;
 import com.example.cellphones.service.ProductService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
