@@ -32,7 +32,7 @@ public class CartController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping(path = "/remove-product/{id}")
+    @DeleteMapping(path = "/remove-product/{id}")
     public ResponseEntity<?> removeCartDetail(@PathVariable String id) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ResponseObject<CartDto> res = cartService.removeProductFromCart(Long.parseLong(id), currentUser.getId());

@@ -83,8 +83,14 @@ public class OrderServiceImpl implements OrderService {
             Cart cart = cartRepo.findCartByUserId(userId);
             List<CartDetail> listCartDetail = cart.getCartDetails();
             for(int i=0; i<request.getListSelectedCartDetailId().size(); i++){
-                CartDetail cartDetail = cartDetailRepo.findById(request.getListSelectedCartDetailId().get(i)).orElseThrow();
-                listCartDetail.remove(cartDetail);
+//                CartDetail cartDetail = cartDetailRepo.findById(request.getListSelectedCartDetailId().get(i)).orElseThrow();
+//                listCartDetail.remove(cartDetail);
+                try {
+                    this.cartDetailRepo.deleteById(request.getListSelectedCartDetailId().get(i));
+                    //return true;
+                } catch (Exception e) {
+                    //return false;
+                }
             }
 
             cart.setCartDetails(listCartDetail);

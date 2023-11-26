@@ -74,13 +74,23 @@ public class CartServiceImpl implements CartService {
     public ResponseObject<CartDto> removeProductFromCart(Long cartDetailId, Long userId) {
         ResponseObject<CartDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         try {
+
+            try {
+                this.cartDetailRepo.deleteById(cartDetailId);
+                //return true;
+            } catch (Exception e) {
+                //return false;
+            }
+
             Cart cart = cartRepo.findCartByUserId(userId);
-            List<CartDetail> listCartDetail = cart.getCartDetails();
-            CartDetail cartDetail = cartDetailRepo.findById(cartDetailId).orElseThrow();
-            listCartDetail.remove(cartDetail);
-            cart.setCartDetails(listCartDetail);
-            cart = this.cartRepo.save(cart);
+//            List<CartDetail> listCartDetail = cart.getCartDetails();
+//            CartDetail cartDetail = cartDetailRepo.findById(cartDetailId).orElseThrow();
+//            listCartDetail.remove(cartDetail);
+//            cart.setCartDetails(listCartDetail);
+//            cart = this.cartRepo.save(cart);
             res.setData(CartMapper.responseCartDtoFromModel(cart));
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
