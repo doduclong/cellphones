@@ -9,7 +9,7 @@ import com.example.cellphones.response.ResponseObject;
 import java.util.List;
 
 public interface UserService {
-    ResponseObject<List<UserDto>> getUserList();
+    ResponseObject<List<UserDto>> getUsers();
     ResponseObject<UserDto> getUserInfo(Long id);
     boolean createUser(CreateUserReq request);
 

@@ -13,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin
@@ -25,6 +27,13 @@ public class UserController {
     public ResponseEntity<?> getUserInfo() {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ResponseObject<UserDto> res = userService.getUserInfo(currentUser.getId());
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping(path = "/")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    public ResponseEntity<?> getUsers() {
+        ResponseObject<List<UserDto>> res = userService.getUsers();
         return ResponseEntity.ok(res);
     }
 

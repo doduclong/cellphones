@@ -39,8 +39,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseObject<List<ProductDto>> getProductList() {
         ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
-        List<Product> country = this.productRepo.findAll();
-        res.setData(country.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
+        List<Product> products = this.productRepo.findAll();
+        res.setData(products.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
         return res;
     }
 

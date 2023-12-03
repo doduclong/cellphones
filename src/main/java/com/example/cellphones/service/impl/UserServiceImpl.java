@@ -1,11 +1,14 @@
 package com.example.cellphones.service.impl;
+import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.UserDto;
 import com.example.cellphones.dto.request.user.CreateUserReq;
 import com.example.cellphones.dto.request.user.UpdateUserReq;
 import com.example.cellphones.exception.UserNotFoundByIdException;
 import com.example.cellphones.exception.UserNotFoundByUsername;
+import com.example.cellphones.mapper.ProductMapper;
 import com.example.cellphones.mapper.UserMapper;
 import com.example.cellphones.model.Cart;
+import com.example.cellphones.model.Product;
 import com.example.cellphones.model.Role;
 import com.example.cellphones.model.User;
 import com.example.cellphones.repository.CartRepository;
@@ -18,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +31,11 @@ public class UserServiceImpl implements UserService {
     final private PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseObject<List<UserDto>> getUserList() {
-        return null;
+    public ResponseObject<List<UserDto>> getUsers() {
+        ResponseObject<List<UserDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<User> users = this.userRepo.findAll();
+        res.setData(users.stream().map(UserMapper::responseUserDtoFromModel).collect(Collectors.toList()));
+        return res;
     }
 
     @Override
