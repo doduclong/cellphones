@@ -1,17 +1,13 @@
 package com.example.cellphones.service.impl;
-import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.UserDto;
 import com.example.cellphones.dto.request.user.CreateUserReq;
 import com.example.cellphones.dto.request.user.UpdateUserReq;
 import com.example.cellphones.exception.UserNotFoundByIdException;
 import com.example.cellphones.exception.UserNotFoundByUsername;
-import com.example.cellphones.mapper.ProductMapper;
 import com.example.cellphones.mapper.UserMapper;
 import com.example.cellphones.model.Cart;
-import com.example.cellphones.model.Product;
 import com.example.cellphones.model.Role;
 import com.example.cellphones.model.User;
-import com.example.cellphones.repository.CartRepository;
 import com.example.cellphones.repository.UserRepository;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.response.ResponseStatus;
@@ -56,6 +52,9 @@ public class UserServiceImpl implements UserService {
                     .username(request.getUsername())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role(Role.USER)
+                    .fullName(request.getFullName())
+                    .email(request.getEmail())
+                    .phoneNumber(request.getPhoneNumber())
                     .build();
             user.setCart(Cart.builder()
                     .user(user)

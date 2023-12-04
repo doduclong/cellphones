@@ -44,6 +44,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public ResponseObject<List<OrderDto>> getOrders() {
+        ResponseObject<List<OrderDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<Order> listOrder = this.orderRepo.findAll();
+        res.setData(listOrder.stream().map(OrderMapper::responseOrderDtoFromModel).collect(Collectors.toList()));
+        return res;
+    }
+
+    @Override
     public ResponseObject<OrderDto> createOrder(CreateOrderReq request, Long userId) {
         ResponseObject<OrderDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         try {

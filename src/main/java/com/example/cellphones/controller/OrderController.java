@@ -19,10 +19,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    @GetMapping(path = "/getAll")
-    public ResponseEntity<?> getProductList() {
+    @GetMapping(path = "/user")
+    public ResponseEntity<?> getOrderOfUser() {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ResponseObject<List<OrderDto>> res = orderService.getOrderOfUser(currentUser.getId());
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping(path = "/")
+    public ResponseEntity<?> getOrders() {
+        ResponseObject<List<OrderDto>> res = orderService.getOrders();
         return ResponseEntity.ok(res);
     }
     @PostMapping(path = "/create")

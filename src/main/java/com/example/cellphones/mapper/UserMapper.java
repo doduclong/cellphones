@@ -14,6 +14,7 @@ public class UserMapper {
                 .phoneNumber(user.getPhoneNumber())
                 .gender(String.valueOf(user.getGender()))
                 .role(String.valueOf(user.getRole()))
+                .active(user.isEnabled())
                 .build();
     }
 }
