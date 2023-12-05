@@ -4,6 +4,7 @@ import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.UserDto;
 import com.example.cellphones.dto.request.user.CreateUserReq;
 import com.example.cellphones.dto.request.user.SetRoleReq;
+import com.example.cellphones.dto.request.user.UpdateUserReq;
 import com.example.cellphones.model.User;
 import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.service.UserService;
@@ -64,6 +65,12 @@ public class UserController {
             return ResponseEntity.ok("Thiết lập vai trò thành công");
         else
             return ResponseEntity.ok("Thiết lập vai trò thất bại");
+    }
+
+    @PostMapping(path = "/update/{id}")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserReq req, @PathVariable String userId) {
+        ResponseObject<UserDto> res = userService.updateUser(req, Long.parseLong(userId));
+        return ResponseEntity.ok(res);
     }
 
     @DeleteMapping(path = "/delete/{username}")

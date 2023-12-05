@@ -11,6 +11,7 @@ import java.util.List;
 public interface UserService {
     ResponseObject<List<UserDto>> getUsers();
     ResponseObject<UserDto> getUserInfo(Long id);
+
     boolean createUser(CreateUserReq request);
 
     boolean activeAccount(String username);
@@ -18,6 +19,6 @@ public interface UserService {
     boolean setRoleForUser(String username, Role role);
 
     //UserDto findByUsername(String username);
-    ResponseObject<UserDto> updateUser(UpdateUserReq request);
+    ResponseObject<UserDto> updateUser(UpdateUserReq request, Long userId);
     boolean deleteUser(String username);
 }

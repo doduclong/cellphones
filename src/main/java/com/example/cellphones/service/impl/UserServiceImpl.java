@@ -101,8 +101,12 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public ResponseObject<UserDto> updateUser(UpdateUserReq request) {
-        return null;
+    public ResponseObject<UserDto> updateUser(UpdateUserReq request, Long userId) {
+        ResponseObject<UserDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(()-> new UserNotFoundByIdException(userId));
+        res.setData(UserMapper.responseUserDtoFromModel(user));
+        return res;
     }
 
     @Override
