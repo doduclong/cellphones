@@ -2,6 +2,7 @@ package com.example.cellphones.controller;
 
 import com.example.cellphones.dto.OrderDto;
 import com.example.cellphones.dto.request.order.CreateOrderReq;
+import com.example.cellphones.dto.request.order.UpdateOrderStatusReq;
 import com.example.cellphones.dto.request.product.SearchProductReq;
 import com.example.cellphones.model.User;
 import com.example.cellphones.response.ResponseObject;
@@ -35,6 +36,12 @@ public class OrderController {
     public ResponseEntity<?> createOrder(@RequestBody CreateOrderReq req) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ResponseObject<OrderDto> res = orderService.createOrder(req, currentUser.getId());
+        return ResponseEntity.ok(res);
+    }
+
+    @PostMapping(path = "/update-status")
+    public ResponseEntity<?> updateStatusOrder(@RequestBody UpdateOrderStatusReq req) {
+        ResponseObject<OrderDto> res = orderService.updateOrderStatus(req);
         return ResponseEntity.ok(res);
     }
 

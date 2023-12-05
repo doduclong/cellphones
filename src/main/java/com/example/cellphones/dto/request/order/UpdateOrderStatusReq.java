@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 public class UpdateOrderStatusReq {
 
-    private Long id;
+    private Long orderId;
     private OrderStatus status;
 
 }

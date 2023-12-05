@@ -121,6 +121,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseObject<OrderDto> updateOrderStatus(UpdateOrderStatusReq request) {
-        return null;
+        ResponseObject<OrderDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        Order order = this.orderRepo.findById(request.getOrderId()).orElseThrow();
+        order.setStatus(request.getStatus());
+        order = this.orderRepo.save(order);
+        res.setData(OrderMapper.responseOrderDtoFromModel(order));
+        return res;
     }
 }
