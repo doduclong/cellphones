@@ -9,6 +9,7 @@ import com.example.cellphones.response.ResponseObject;
 import com.example.cellphones.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class OrderController {
     }
 
     @PostMapping(path = "/update-status")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> updateStatusOrder(@RequestBody UpdateOrderStatusReq req) {
         ResponseObject<OrderDto> res = orderService.updateOrderStatus(req);
         return ResponseEntity.ok(res);
