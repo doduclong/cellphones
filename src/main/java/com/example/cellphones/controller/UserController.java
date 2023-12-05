@@ -1,6 +1,4 @@
 package com.example.cellphones.controller;
-
-import com.example.cellphones.dto.ProductDto;
 import com.example.cellphones.dto.UserDto;
 import com.example.cellphones.dto.request.user.CreateUserReq;
 import com.example.cellphones.dto.request.user.SetRoleReq;
