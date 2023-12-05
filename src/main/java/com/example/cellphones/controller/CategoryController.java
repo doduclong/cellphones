@@ -25,7 +25,7 @@ public class CategoryController {
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "/create")
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<?> createCategory(@RequestBody UpdateCategoryReq req) {
         ResponseObject<CategoryDto> res = categoryService.createCategory(req.getName());
