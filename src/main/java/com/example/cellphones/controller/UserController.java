@@ -65,7 +65,7 @@ public class UserController {
             return ResponseEntity.ok("Thiết lập vai trò thất bại");
     }
 
-    @PostMapping(path = "/update/{id}")
+    @PostMapping(path = "/update/{userId}")
     public ResponseEntity<?> updateUser(@RequestBody UpdateUserReq req, @PathVariable String userId) {
         ResponseObject<UserDto> res = userService.updateUser(req, Long.parseLong(userId));
         return ResponseEntity.ok(res);
