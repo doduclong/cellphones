@@ -94,12 +94,6 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-//    @Override
-//    public UserDto findByUsername(String username) {
-//        User user = this.userRepo.findByUsername(username);
-//        return UserMapper.responseUserDtoFromModel(user);
-//    }
-
     @Override
     public ResponseObject<UserDto> updateUser(UpdateUserReq request, Long userId) {
         ResponseObject<UserDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);

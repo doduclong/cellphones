@@ -152,6 +152,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ResponseObject<List<ProductDto>> searchProductByKeywords(List<String> keywords) {
+        ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<Product> products = new ArrayList<>();
+        for(int indexKey =0; indexKey<keywords.size(); indexKey++){
+            String keyword = keywords.get(indexKey);
+            try{
+                Product product = this.productRepo.searchByKeyword(keyword);
+                if(product != null){
+                    products.add(product);
+                }
+
+
+            }catch (Exception e){
+                System.out.println(e);
+            }
+
+        }
+        res.setData(products.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
+        return res;
+    }
+
+    @Override
     public ResponseObject<ProductDto> getProductById(Long id) {
         ResponseObject<ProductDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         Product product = this.productRepo.findById(id)

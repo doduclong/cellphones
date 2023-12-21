@@ -17,6 +17,7 @@ public interface ProductService {
 
     ResponseObject<List<ProductDto>> searchProduct(String searchText);
 
+    ResponseObject<List<ProductDto>> searchProductByKeywords(List<String> keywords);
     ResponseObject<ProductDto> getProductById(Long id);
 
 }
