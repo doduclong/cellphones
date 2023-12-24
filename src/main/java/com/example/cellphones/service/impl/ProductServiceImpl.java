@@ -25,6 +25,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -135,8 +136,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean deleteProduct(Long id) {
+        Optional<Product> product = productRepo.findById(id);
+        if (!product.isPresent()) {
+            return false;
+        }
         try {
-            this.productRepo.deleteById(id);
+            productRepo.deleteById(id);
             return true;
         } catch (Exception e) {
             return false;
