@@ -17,7 +17,13 @@ public interface ProductService {
 
     ResponseObject<List<ProductDto>> searchProduct(String searchText);
 
+    ResponseObject<List<ProductDto>> searchUnderPrice(int price);
+
+    ResponseObject<List<ProductDto>> searchOverPrice(int price);
+
     ResponseObject<List<ProductDto>> searchProductByKeywords(List<String> keywords);
     ResponseObject<ProductDto> getProductById(Long id);
+
+    ResponseObject<ProductDto> newestProduct();
 
 }

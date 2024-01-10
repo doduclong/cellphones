@@ -151,8 +151,24 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseObject<List<ProductDto>> searchProduct(String searchText) {
         ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
-        List<Product> country = this.productRepo.searchByNameProduct(searchText);
-        res.setData(country.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
+        List<Product> products = this.productRepo.searchByNameProduct(searchText);
+        res.setData(products.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
+        return res;
+    }
+
+    @Override
+    public ResponseObject<List<ProductDto>> searchUnderPrice(int price) {
+        ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<Product> products = this.productRepo.searchUnderPrice(price);
+        res.setData(products.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
+        return res;
+    }
+
+    @Override
+    public ResponseObject<List<ProductDto>> searchOverPrice(int price) {
+        ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<Product> products = this.productRepo.searchOverPrice(price);
+        res.setData(products.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
         return res;
     }
 
@@ -183,6 +199,14 @@ public class ProductServiceImpl implements ProductService {
         ResponseObject<ProductDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         Product product = this.productRepo.findById(id)
                 .orElseThrow(()-> new ProductNotFoundByIdException("Product not found by id ",id));
+        res.setData(ProductMapper.responseProductDtoFromModel(product));
+        return res;
+    }
+
+    @Override
+    public ResponseObject<ProductDto> newestProduct() {
+        ResponseObject<ProductDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        Product product = this.productRepo.newestProduct();
         res.setData(ProductMapper.responseProductDtoFromModel(product));
         return res;
     }

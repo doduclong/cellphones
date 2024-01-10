@@ -20,4 +20,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT e FROM Product e" +
             " WHERE(:keyword is null or (e.classification = :keyword))")
     Product searchByKeyword(@Param("keyword") String keyword);
+
+    @Query("SELECT e FROM Product e" +
+            " WHERE :price >= e.price")
+    List<Product> searchUnderPrice(@Param("price") int price);
+
+    @Query("SELECT e FROM Product e" +
+            " WHERE :price <= e.price")
+    List<Product> searchOverPrice(@Param("price") int price);
+
+    @Query("SELECT e FROM Product e" +
+            " WHERE e.id = (SELECT MAX(e.id) FROM e.id)")
+    Product newestProduct();
 }

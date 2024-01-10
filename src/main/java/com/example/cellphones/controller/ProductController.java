@@ -75,4 +75,22 @@ public class ProductController {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping(path = "/search/under-price")
+    public ResponseEntity<?> searchProductUnderPrice(@RequestParam String price) {
+        ResponseObject<List<ProductDto>> res = productService.searchUnderPrice(Integer.parseInt(price));
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping(path = "/search/over-price")
+    public ResponseEntity<?> searchProductOverPrice(@RequestParam String price) {
+        ResponseObject<List<ProductDto>> res = productService.searchOverPrice(Integer.parseInt(price));
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping(path = "/newest")
+    public ResponseEntity<?> newestProduct() {
+        ResponseObject<ProductDto> res = productService.newestProduct();
+        return ResponseEntity.ok(res);
+    }
+
 }
