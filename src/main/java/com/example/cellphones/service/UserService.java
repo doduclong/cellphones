@@ -16,6 +16,8 @@ public interface UserService {
 
     boolean activeAccount(String username);
 
+    boolean inactiveAccount(String username);
+
     boolean setRoleForUser(String username, Role role);
 
     //UserDto findByUsername(String username);

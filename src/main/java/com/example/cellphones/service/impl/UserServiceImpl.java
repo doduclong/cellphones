@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
                     .fullName(request.getFullName())
                     .email(request.getEmail())
                     .phoneNumber(request.getPhoneNumber())
+                    .enabled(true)
                     .build();
             user.setCart(Cart.builder()
                     .user(user)
@@ -73,6 +74,19 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userRepo.findByUsername(username).orElseThrow(() -> new UserNotFoundByUsername(username));
             user.setEnabled(true);
+            this.userRepo.saveAndFlush(user);
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean inactiveAccount(String username) {
+        try {
+            User user = userRepo.findByUsername(username).orElseThrow(() -> new UserNotFoundByUsername(username));
+            user.setEnabled(false);
             this.userRepo.saveAndFlush(user);
         }catch (Exception e){
             System.out.println(e);

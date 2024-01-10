@@ -55,6 +55,16 @@ public class UserController {
             return ResponseEntity.ok("Kích hoạt tài khoản thất bại");
     }
 
+    @PostMapping(path = "/inactive/{username}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    public ResponseEntity<?> inactiveAccount(@PathVariable String username) {
+        boolean res = userService.inactiveAccount(username);
+        if(res)
+            return ResponseEntity.ok("Kích hoạt tài khoản thành công");
+        else
+            return ResponseEntity.ok("Kích hoạt tài khoản thất bại");
+    }
+
     @PostMapping(path = "/setRole")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> setRole(@RequestBody SetRoleReq req) {
