@@ -17,6 +17,8 @@ public interface ProductService {
 
     ResponseObject<List<ProductDto>> searchProduct(String searchText);
 
+    ResponseObject<List<ProductDto>> searchProductByCategory(Long categoryId);
+
     ResponseObject<List<ProductDto>> searchUnderPrice(int price);
 
     ResponseObject<List<ProductDto>> searchOverPrice(int price);

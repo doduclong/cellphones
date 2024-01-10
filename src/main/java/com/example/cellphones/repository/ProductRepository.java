@@ -14,6 +14,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             " WHERE(:contains is null or (e.name like %:contains%))")
     List<Product> searchByNameProduct(@Param("contains") String contains);
 
+    @Query("SELECT e FROM Product e" +
+            " WHERE(e.category.id = :categoryId)")
+    List<Product> searchByCategoryId(@Param("categoryId") Long categoryId);
+
     @Query("SELECT t FROM Product t WHERE t.name=:name")
     Product findByName(String name);
 

@@ -157,6 +157,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ResponseObject<List<ProductDto>> searchProductByCategory(Long categoryId) {
+        ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<Product> products = this.productRepo.searchByCategoryId(categoryId);
+        res.setData(products.stream().map(ProductMapper::responseProductDtoFromModel).collect(Collectors.toList()));
+        return res;
+    }
+
+    @Override
     public ResponseObject<List<ProductDto>> searchUnderPrice(int price) {
         ResponseObject<List<ProductDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         List<Product> products = this.productRepo.searchUnderPrice(price);
