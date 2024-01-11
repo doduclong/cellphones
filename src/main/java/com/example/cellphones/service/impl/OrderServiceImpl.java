@@ -32,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
 
     private final CartRepository cartRepo;
 
+    private final SizeRepository sizeRepo;
+
     private final CartDetailRepository cartDetailRepo;
 
 
@@ -83,6 +85,11 @@ public class OrderServiceImpl implements OrderService {
                         .build();
                 listOrderDetail.add(orderDetail);
                 tmpTotal += product.getPrice() * orderDetailReq.getQuantity();
+
+                Size size = sizeRepo.findByName(orderDetailReq.getSize(), product.getId());
+                size.setQuantity(size.getQuantity()-orderDetail.getQuantity());
+                sizeRepo.saveAndFlush(size);
+
             }
             order.setTotal(tmpTotal);
             order.setListOrderDetail(listOrderDetail);
